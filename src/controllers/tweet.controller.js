@@ -13,6 +13,16 @@ const updateTweet = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send({ tweet });
 });
 
+const likeTweet = catchAsync(async (req, res) => {
+    const tweet = await tweetService.likeTweet(req.params.tweetId, req.user.id);
+    res.status(httpStatus.OK).send({ tweet });
+});
+
+const unlikeTweet = catchAsync(async (req, res) => {
+    const tweet = await tweetService.unlikeTweet(req.params.tweetId, req.user.id);
+    res.status(httpStatus.OK).send({ tweet });
+});
+
 const deleteTweet = catchAsync(async (req, res) => {
     const tweet = await tweetService.deleteTweet(req.params.tweetId, req.user.id);
     res.status(httpStatus.OK).send({ tweet });
@@ -33,6 +43,8 @@ const getTweets = catchAsync(async (req, res) => {
 module.exports = {
     createTweet,
     updateTweet,
+    likeTweet,
+    unlikeTweet,
     deleteTweet,
     getTweet,
     getTweets
