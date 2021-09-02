@@ -21,6 +21,12 @@ const updateTweet = {
   }),
 };
 
+const likeUnlikeTweet = {
+  params: Joi.object().keys({
+    tweetId: Joi.custom(objectId),
+  }),
+};
+
 const deleteTweet = {
   params: Joi.object().keys({
     tweetId: Joi.custom(objectId),
@@ -48,6 +54,7 @@ const getTweet = {
 module.exports = {
   createTweet,
   updateTweet,
+  likeUnlikeTweet,
   deleteTweet,
   getTweet,
   getTweets
