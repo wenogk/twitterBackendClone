@@ -90,13 +90,13 @@ const likeTweet = async (tweetId, userId) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Tweet not found');
   }
 
-  return await Tweet.updateOne({
+  return await Tweet.findOneAndUpdate({
     _id: tweetId
   }, {
     $addToSet: {
       likes: userId
     }
-  })
+  }, {new : true})
 };
 
 /**
@@ -114,13 +114,13 @@ const likeTweet = async (tweetId, userId) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Tweet not found');
   }
 
-  return await Tweet.updateOne({
+  return await Tweet.findOneAndUpdate({
     _id: tweetId
   }, {
     $pull: {
       likes: userId
     }
-  })
+  }, {new : true})
 };
 
 module.exports = {
