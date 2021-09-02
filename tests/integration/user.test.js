@@ -23,30 +23,6 @@ describe('User routes', () => {
       };
     });
 
-    test('should return 201 and successfully create new user if data is ok', async () => {
-      await insertUsers([admin]);
-
-      const res = await request(app)
-        .post('/v1/users')
-        .set('Authorization', `Bearer ${adminAccessToken}`)
-        .send(newUser)
-        .expect(httpStatus.CREATED);
-
-      expect(res.body).not.toHaveProperty('password');
-      expect(res.body).toEqual({
-        id: expect.anything(),
-        name: newUser.name,
-        email: newUser.email,
-        role: newUser.role,
-        isEmailVerified: false,
-        username : newUser.username
-      });
-
-      const dbUser = await User.findById(res.body.id);
-      expect(dbUser).toBeDefined();
-      expect(dbUser.password).not.toBe(newUser.password);
-      expect(dbUser).toMatchObject({ name: newUser.name, email: newUser.email, role: newUser.role, isEmailVerified: false });
-    });
 
     test('should return 401 error if access token is missing', async () => {
       await request(app).post('/v1/users').send(newUser).expect(httpStatus.UNAUTHORIZED);
