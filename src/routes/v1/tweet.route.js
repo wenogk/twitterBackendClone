@@ -11,7 +11,7 @@ router.get('/', validate(tweetValidation.getTweets), auth(), tweetController.get
 router.route('/:tweetId')
     .get(validate(tweetValidation.getTweet), tweetController.getTweet)
     .put(validate(tweetValidation.updateTweet), auth(), tweetController.updateTweet)
-    .delete( validate(tweetValidation.updateTweet), auth(), tweetController.updateTweet);
+    .delete( validate(tweetValidation.deleteTweet), auth(), tweetController.updateTweet);
 
 router.post('/', validate(tweetValidation.createTweet), auth(), tweetController.createTweet);
 
