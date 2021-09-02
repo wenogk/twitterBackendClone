@@ -41,7 +41,7 @@ describe('paginate plugin', () => {
       const project = await Project.create({ name: 'Project One' });
       const task = await Task.create({ name: 'Task One', project: project._id });
 
-      const taskPages = await Task.paginate({ _id: task._id }, { populate: 'project' });
+      const taskPages = await Task.paginate({ _id: task._id }, { populate: ['project'] });
 
       expect(taskPages.results[0].project).toHaveProperty('_id', project._id);
     });
@@ -50,7 +50,7 @@ describe('paginate plugin', () => {
       const project = await Project.create({ name: 'Project One' });
       const task = await Task.create({ name: 'Task One', project: project._id });
 
-      const projectPages = await Project.paginate({ _id: project._id }, { populate: 'tasks.project' });
+      const projectPages = await Project.paginate({ _id: project._id }, { populate: ['tasks.project'] });
       const { tasks } = projectPages.results[0];
 
       expect(tasks).toHaveLength(1);
