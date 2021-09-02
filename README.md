@@ -27,7 +27,14 @@ Running locally:
 yarn dev
 ```
 
-The Automatically generated Swagger REST API Documentation will be here when run locally (screenshot image shown below):
+
+Running Tests locally:
+
+```bash
+yarn test
+```
+
+The Automatically generated Swagger REST API Documentation will be served a this url when run locally (screenshot image shown below):
 
 ```bash
 http://localhost:3000/v1/docs/
