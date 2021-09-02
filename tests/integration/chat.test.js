@@ -66,7 +66,7 @@ describe('Chat routes', () => {
         .set('Authorization', `Bearer ${userOneAccessToken}`)
         .send(newChatMessage)
         .expect(httpStatus.CREATED);
-    
+
       await request(app)
         .post('/v1/chat')
         .set('Authorization', `Bearer ${userTwoAccessToken}`)

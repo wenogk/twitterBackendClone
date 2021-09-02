@@ -96,7 +96,9 @@ const likeTweet = async (tweetId, userId) => {
     $addToSet: {
       likes: userId
     }
-  }, {new : true})
+  }, {
+    new: true
+  })
 };
 
 /**
@@ -105,7 +107,7 @@ const likeTweet = async (tweetId, userId) => {
  * @param userId
  * @returns {Promise<Tweet>}
  */
- const unlikeTweet = async (tweetId, userId) => {
+const unlikeTweet = async (tweetId, userId) => {
   const tweet = await Tweet.findOne({
     _id: tweetId,
   });
@@ -120,7 +122,9 @@ const likeTweet = async (tweetId, userId) => {
     $pull: {
       likes: userId
     }
-  }, {new : true})
+  }, {
+    new: true
+  })
 };
 
 module.exports = {

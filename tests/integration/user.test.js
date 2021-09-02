@@ -3,9 +3,19 @@ const faker = require('faker');
 const httpStatus = require('http-status');
 const app = require('../../src/app');
 const setupTestDB = require('../utils/setupTestDB');
-const { User } = require('../../src/models');
-const { userOne, userTwo, admin, insertUsers } = require('../fixtures/user.fixture');
-const { userOneAccessToken, adminAccessToken } = require('../fixtures/token.fixture');
+const {
+  User
+} = require('../../src/models');
+const {
+  userOne,
+  userTwo,
+  admin,
+  insertUsers
+} = require('../fixtures/user.fixture');
+const {
+  userOneAccessToken,
+  adminAccessToken
+} = require('../fixtures/token.fixture');
 
 setupTestDB();
 
@@ -17,7 +27,7 @@ describe('User routes', () => {
       newUser = {
         name: faker.name.findName(),
         email: faker.internet.userName() + faker.internet.email().toLowerCase(),
-        username : faker.internet.userName(),
+        username: faker.internet.userName(),
         password: 'password1',
         role: 'user',
       };
@@ -126,7 +136,7 @@ describe('User routes', () => {
         email: userOne.email,
         role: userOne.role,
         isEmailVerified: userOne.isEmailVerified,
-        username : userOne.username
+        username: userOne.username
       });
     });
 
@@ -152,7 +162,9 @@ describe('User routes', () => {
       const res = await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${adminAccessToken}`)
-        .query({ name: userOne.name })
+        .query({
+          name: userOne.name
+        })
         .send()
         .expect(httpStatus.OK);
 
@@ -173,7 +185,9 @@ describe('User routes', () => {
       const res = await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${adminAccessToken}`)
-        .query({ role: 'user' })
+        .query({
+          role: 'user'
+        })
         .send()
         .expect(httpStatus.OK);
 
@@ -195,7 +209,9 @@ describe('User routes', () => {
       const res = await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${adminAccessToken}`)
-        .query({ sortBy: 'role:desc' })
+        .query({
+          sortBy: 'role:desc'
+        })
         .send()
         .expect(httpStatus.OK);
 
@@ -218,7 +234,9 @@ describe('User routes', () => {
       const res = await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${adminAccessToken}`)
-        .query({ sortBy: 'role:asc' })
+        .query({
+          sortBy: 'role:asc'
+        })
         .send()
         .expect(httpStatus.OK);
 
@@ -241,7 +259,9 @@ describe('User routes', () => {
       const res = await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${adminAccessToken}`)
-        .query({ sortBy: 'role:desc,name:asc' })
+        .query({
+          sortBy: 'role:desc,name:asc'
+        })
         .send()
         .expect(httpStatus.OK);
 
@@ -275,7 +295,9 @@ describe('User routes', () => {
       const res = await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${adminAccessToken}`)
-        .query({ limit: 2 })
+        .query({
+          limit: 2
+        })
         .send()
         .expect(httpStatus.OK);
 
@@ -297,7 +319,10 @@ describe('User routes', () => {
       const res = await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${adminAccessToken}`)
-        .query({ page: 2, limit: 2 })
+        .query({
+          page: 2,
+          limit: 2
+        })
         .send()
         .expect(httpStatus.OK);
 
@@ -330,7 +355,7 @@ describe('User routes', () => {
         name: userOne.name,
         role: userOne.role,
         isEmailVerified: userOne.isEmailVerified,
-        username : userOne.username
+        username: userOne.username
       });
     });
 
@@ -464,25 +489,33 @@ describe('User routes', () => {
         email: updateBody.email,
         role: 'user',
         isEmailVerified: false,
-        username : userOne.username
+        username: userOne.username
       });
 
       const dbUser = await User.findById(userOne._id);
       expect(dbUser).toBeDefined();
       expect(dbUser.password).not.toBe(updateBody.password);
-      expect(dbUser).toMatchObject({ name: updateBody.name, email: updateBody.email, role: 'user' });
+      expect(dbUser).toMatchObject({
+        name: updateBody.name,
+        email: updateBody.email,
+        role: 'user'
+      });
     });
 
     test('should return 401 error if access token is missing', async () => {
       await insertUsers([userOne]);
-      const updateBody = { name: faker.name.findName() };
+      const updateBody = {
+        name: faker.name.findName()
+      };
 
       await request(app).patch(`/v1/users/${userOne._id}`).send(updateBody).expect(httpStatus.UNAUTHORIZED);
     });
 
     test('should return 403 if user is updating another user', async () => {
       await insertUsers([userOne, userTwo]);
-      const updateBody = { name: faker.name.findName() };
+      const updateBody = {
+        name: faker.name.findName()
+      };
 
       await request(app)
         .patch(`/v1/users/${userTwo._id}`)
@@ -493,7 +526,9 @@ describe('User routes', () => {
 
     test('should return 200 and successfully update user if admin is updating another user', async () => {
       await insertUsers([userOne, admin]);
-      const updateBody = { name: faker.name.findName() };
+      const updateBody = {
+        name: faker.name.findName()
+      };
 
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
@@ -504,7 +539,9 @@ describe('User routes', () => {
 
     test('should return 404 if admin is updating another user that is not found', async () => {
       await insertUsers([admin]);
-      const updateBody = { name: faker.name.findName() };
+      const updateBody = {
+        name: faker.name.findName()
+      };
 
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
@@ -515,7 +552,9 @@ describe('User routes', () => {
 
     test('should return 400 error if userId is not a valid mongo id', async () => {
       await insertUsers([admin]);
-      const updateBody = { name: faker.name.findName() };
+      const updateBody = {
+        name: faker.name.findName()
+      };
 
       await request(app)
         .patch(`/v1/users/invalidId`)
@@ -526,7 +565,9 @@ describe('User routes', () => {
 
     test('should return 400 if email is invalid', async () => {
       await insertUsers([userOne]);
-      const updateBody = { email: 'invalidEmail' };
+      const updateBody = {
+        email: 'invalidEmail'
+      };
 
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
@@ -537,7 +578,9 @@ describe('User routes', () => {
 
     test('should return 400 if email is already taken', async () => {
       await insertUsers([userOne, userTwo]);
-      const updateBody = { email: userTwo.email };
+      const updateBody = {
+        email: userTwo.email
+      };
 
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
@@ -548,7 +591,9 @@ describe('User routes', () => {
 
     test('should not return 400 if email is my email', async () => {
       await insertUsers([userOne]);
-      const updateBody = { email: userOne.email };
+      const updateBody = {
+        email: userOne.email
+      };
 
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
@@ -559,7 +604,9 @@ describe('User routes', () => {
 
     test('should return 400 if password length is less than 8 characters', async () => {
       await insertUsers([userOne]);
-      const updateBody = { password: 'passwo1' };
+      const updateBody = {
+        password: 'passwo1'
+      };
 
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
@@ -570,7 +617,9 @@ describe('User routes', () => {
 
     test('should return 400 if password does not contain both letters and numbers', async () => {
       await insertUsers([userOne]);
-      const updateBody = { password: 'password' };
+      const updateBody = {
+        password: 'password'
+      };
 
       await request(app)
         .patch(`/v1/users/${userOne._id}`)

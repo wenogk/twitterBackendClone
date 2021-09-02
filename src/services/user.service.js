@@ -1,5 +1,7 @@
 const httpStatus = require('http-status');
-const { User } = require('../models');
+const {
+  User
+} = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -44,7 +46,9 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({ email });
+  return User.findOne({
+    email
+  });
 };
 
 /**
@@ -52,8 +56,10 @@ const getUserByEmail = async (email) => {
  * @param {string} username
  * @returns {Promise<User>}
  */
- const getUserByUsername = async (username) => {
-  return User.findOne({ username });
+const getUserByUsername = async (username) => {
+  return User.findOne({
+    username
+  });
 };
 
 /**

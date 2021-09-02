@@ -1,4 +1,6 @@
-const { Chat } = require('../models');
+const {
+  Chat
+} = require('../models');
 
 /**
  * Create a chat
@@ -18,22 +20,22 @@ const sendMessage = async (msgBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
- const getChat = async (userOne,userTwo, options) => {
-    const filter = {
-        $or : [{
-             from : userOne,
-             to : userTwo
-        }, {
-            from : userTwo,
-            to : userOne
-       }]
-    }
-    console.log("filter = " + JSON.stringify(filter))
-    const chatMsgs = await Chat.paginate(filter, options);
-    return chatMsgs;
-  };
+const getChat = async (userOne, userTwo, options) => {
+  const filter = {
+    $or: [{
+      from: userOne,
+      to: userTwo
+    }, {
+      from: userTwo,
+      to: userOne
+    }]
+  }
+  console.log("filter = " + JSON.stringify(filter))
+  const chatMsgs = await Chat.paginate(filter, options);
+  return chatMsgs;
+};
 
 module.exports = {
-    getChat,
-    sendMessage
+  getChat,
+  sendMessage
 };
