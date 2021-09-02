@@ -37,6 +37,8 @@ The Automatically generated Swagger REST API Documentation will be here when run
 http://localhost:3000/v1/docs/
 ```
 
+![Swagger doc UI](https://i.ibb.co/vjYVDb4/api-shot.jpg)
+
 ## Table of Contents
 
 - [Features](#features)
