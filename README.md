@@ -18,12 +18,11 @@ Set the environment variables:
 
 ```bash
 cp .env.example .env
-
+```
 ````diff
 - open .env and modify the environment variables. ONLY the MONGODB_URL needs to be changed. You can spin up a local mongodb or use the below url:
 - I have setup a temporary free account mongodb url just for the assesment. Copy paste this line into the .env:
 + MONGODB_URL=mongodb+srv://test:rHU1q1L9PetuVZPt@rivermouth.rt5m7.mongodb.net/test?retryWrites=true
-```
 
 Running locally:
 
