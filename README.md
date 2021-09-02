@@ -21,7 +21,7 @@ cp .env.example .env
 + MONGODB_URL=mongodb+srv://test:rHU1q1L9PetuVZPt@rivermouth.rt5m7.mongodb.net/test?retryWrites=true
 ````
 
-Running locally:
+Running backend locally:
 
 ```bash
 yarn dev
