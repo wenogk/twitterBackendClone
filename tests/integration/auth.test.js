@@ -25,6 +25,7 @@ describe('Auth routes', () => {
       newUser = {
         name: faker.name.findName(),
         email: faker.internet.email().toLowerCase(),
+        username : faker.internet.userName(),
         password: 'password1',
       };
     });
@@ -37,6 +38,7 @@ describe('Auth routes', () => {
         id: expect.anything(),
         name: newUser.name,
         email: newUser.email,
+        username: newUser.username,
         role: 'user',
         isEmailVerified: false,
       });
@@ -86,7 +88,7 @@ describe('Auth routes', () => {
     test('should return 200 and login user if email and password match', async () => {
       await insertUsers([userOne]);
       const loginCredentials = {
-        email: userOne.email,
+        username: userOne.username,
         password: userOne.password,
       };
 
@@ -95,6 +97,7 @@ describe('Auth routes', () => {
       expect(res.body.user).toEqual({
         id: expect.anything(),
         name: userOne.name,
+        username: userOne.username,
         email: userOne.email,
         role: userOne.role,
         isEmailVerified: userOne.isEmailVerified,
@@ -108,25 +111,25 @@ describe('Auth routes', () => {
 
     test('should return 401 error if there are no users with that email', async () => {
       const loginCredentials = {
-        email: userOne.email,
+        username: userOne.username,
         password: userOne.password,
       };
 
       const res = await request(app).post('/v1/auth/login').send(loginCredentials).expect(httpStatus.UNAUTHORIZED);
 
-      expect(res.body).toEqual({ code: httpStatus.UNAUTHORIZED, message: 'Incorrect email or password' });
+      expect(res.body).toEqual({ code: httpStatus.UNAUTHORIZED, message: 'Incorrect username or password' });
     });
 
     test('should return 401 error if password is wrong', async () => {
       await insertUsers([userOne]);
       const loginCredentials = {
-        email: userOne.email,
+        username: userOne.username,
         password: 'wrongPassword1',
       };
 
       const res = await request(app).post('/v1/auth/login').send(loginCredentials).expect(httpStatus.UNAUTHORIZED);
 
-      expect(res.body).toEqual({ code: httpStatus.UNAUTHORIZED, message: 'Incorrect email or password' });
+      expect(res.body).toEqual({ code: httpStatus.UNAUTHORIZED, message: 'Incorrect username or password' });
     });
   });
 
