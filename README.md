@@ -1,4 +1,4 @@
-# RESTful API Node Server Boilerplate
+# RESTful API For Twitter Clone
 
 [![Build Status](https://travis-ci.org/hagopj13/node-express-boilerplate.svg?branch=master)](https://travis-ci.org/hagopj13/node-express-boilerplate)
 [![Coverage Status](https://coveralls.io/repos/github/hagopj13/node-express-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/hagopj13/node-express-boilerplate?branch=master)
@@ -8,33 +8,7 @@ A boilerplate/starter project for quickly building RESTful APIs using Node.js, E
 
 By running a single command, you will get a production-ready Node.js app installed and fully configured on your machine. The app comes with many built-in features, such as authentication using JWT, request validation, unit and integration tests, continuous integration, docker support, API documentation, pagination, etc. For more details, check the features list below.
 
-## Quick Start
-
-To create a project, simply run:
-
-```bash
-npx create-nodejs-express-app <project-name>
-```
-
-Or
-
-```bash
-npm init nodejs-express-app <project-name>
-```
-
-## Manual Installation
-
-If you would still prefer to do the installation manually, follow these steps:
-
-Clone the repo:
-
-```bash
-git clone --depth 1 https://github.com/hagopj13/node-express-boilerplate.git
-cd node-express-boilerplate
-npx rimraf ./.git
-```
-
-Install the dependencies:
+## How to run
 
 ```bash
 yarn install
@@ -46,6 +20,12 @@ Set the environment variables:
 cp .env.example .env
 
 # open .env and modify the environment variables (if needed)
+```
+
+Running locally:
+
+```bash
+yarn dev
 ```
 
 ## Table of Contents
