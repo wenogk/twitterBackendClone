@@ -233,6 +233,42 @@ describe('Tweet routes', () => {
     });
   });
 
+  describe('PUT /v1/tweet/:tweetId/like', () => {
+    test('should return 200 and successfully like specific tweet', async () => {
+        await insertUsers([userOne, userTwo]);
+
+      let newTweet = {
+        tweetText: "testing message",
+        type: "tweet"
+      }
+
+      let savedTweet = await request(app)
+        .post('/v1/tweet')
+        .set('Authorization', `Bearer ${userOneAccessToken}`)
+        .send(newTweet)
+        .expect(httpStatus.CREATED);
+
+    let tweetInsertId = String(JSON.parse(savedTweet.text).tweet.id)
+      const res = await request(app)
+        .put(`/v1/tweet/${tweetInsertId}/like`)
+        .set('Authorization', `Bearer ${userTwoAccessToken}`)
+        .send()
+        .expect(httpStatus.OK);
+
+      expect(res.body).toEqual({
+        tweet: {
+            likes: expect.any(Array),
+            tweetText: newTweet.tweetText,
+            type: newTweet.type,
+            user: String(userOne._id),
+            id: tweetInsertId
+          }
+      });
+      expect(res.body.tweet.likes).toHaveLength(1)
+      expect(res.body.tweet.likes[0]).toEqual(String(userTwo._id))
+    });
+  });
+
   describe('DELETE /v1/tweet/:tweetId', () => {
     test('should return 200 and successfully delete specific tweet', async () => {
         await insertUsers([userOne]);
