@@ -16,7 +16,7 @@ describe('User routes', () => {
     beforeEach(() => {
       newUser = {
         name: faker.name.findName(),
-        email: faker.internet.email().toLowerCase(),
+        email: faker.internet.userName() + faker.internet.email().toLowerCase(),
         username : faker.internet.userName(),
         password: 'password1',
         role: 'user',
@@ -46,22 +46,6 @@ describe('User routes', () => {
       expect(dbUser).toBeDefined();
       expect(dbUser.password).not.toBe(newUser.password);
       expect(dbUser).toMatchObject({ name: newUser.name, email: newUser.email, role: newUser.role, isEmailVerified: false });
-    });
-
-    test('should be able to create an admin as well', async () => {
-      await insertUsers([admin]);
-      newUser.role = 'admin';
-
-      const res = await request(app)
-        .post('/v1/users')
-        .set('Authorization', `Bearer ${adminAccessToken}`)
-        .send(newUser)
-        .expect(httpStatus.CREATED);
-
-      expect(res.body.role).toBe('admin');
-
-      const dbUser = await User.findById(res.body.id);
-      expect(dbUser.role).toBe('admin');
     });
 
     test('should return 401 error if access token is missing', async () => {
@@ -504,7 +488,7 @@ describe('User routes', () => {
         email: updateBody.email,
         role: 'user',
         isEmailVerified: false,
-        username : updateBody.username
+        username : userOne.username
       });
 
       const dbUser = await User.findById(userOne._id);

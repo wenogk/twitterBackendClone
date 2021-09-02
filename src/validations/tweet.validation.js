@@ -5,7 +5,7 @@ const {
 
 const createTweet = {
   body: Joi.object().keys({
-    tweetText: Joi.string().required(),
+    tweetText: Joi.string(),
     type: Joi.valid('tweet', 'retweet', 'threaded').required(),
     threadedTweet: Joi.custom(objectId),
     retweetedTweet: Joi.custom(objectId),

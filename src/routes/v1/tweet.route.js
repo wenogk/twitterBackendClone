@@ -60,6 +60,76 @@ module.exports = router;
 
 /**
  * @swagger
+ * /tweet?1:
+ *   post:
+ *     summary: Retweet a Tweet
+ *     tags: [Tweet Bonus]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - retweetedTweet
+ *               - type
+ *             properties:
+ *               retweetedTweet:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *                 enum: ['tweet', 'retweet', 'threaded']
+ *             example:
+ *               retweetedTweet: 1235678779
+ *               type: retweet
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       "204":
+ *         description: No content
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /tweet?2:
+ *   post:
+ *     summary: Create a Tweet Thread
+ *     tags: [Tweet Bonus]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - tweetText
+ *               - threadedTweet
+ *               - type
+ *             properties:
+ *               tweetText:
+ *                 type: string
+ *               threadedTweet:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *                 enum: ['tweet', 'retweet', 'threaded']
+ *             example:
+ *               tweetText: here i am threading a tweet
+ *               threadedTweet: 1235678779
+ *               type: threaded
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       "204":
+ *         description: No content
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
  * /tweet/{tweetId}:
  *   get:
  *     summary: Get a single tweet

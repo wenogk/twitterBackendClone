@@ -8,8 +8,7 @@ const tweetSchema = mongoose.Schema(
         ref: 'User',
     },
     tweetText: {
-      type: String,
-      required: true
+      type: String
     },
     type: {
         type: String,

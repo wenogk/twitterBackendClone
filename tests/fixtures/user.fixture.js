@@ -31,7 +31,7 @@ const admin = {
   _id: mongoose.Types.ObjectId(),
   name: faker.name.findName(),
   username : faker.internet.userName(),
-  email: faker.internet.email().toLowerCase(),
+  email: faker.internet.userName() + faker.internet.email().toLowerCase(),
   password,
   role: 'admin',
   isEmailVerified: false,
