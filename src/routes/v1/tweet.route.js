@@ -13,6 +13,10 @@ router.route('/:tweetId')
     .put(validate(tweetValidation.updateTweet), auth(), tweetController.updateTweet)
     .delete( validate(tweetValidation.deleteTweet), auth(), tweetController.deleteTweet);
 
+router.route('/:tweetId/like')
+    .put(validate(tweetValidation.likeUnlikeTweet), auth(), tweetController.likeTweet)
+    .delete( validate(tweetValidation.likeUnlikeTweet), auth(), tweetController.unlikeTweet);
+
 router.post('/', validate(tweetValidation.createTweet), auth(), tweetController.createTweet);
 
 module.exports = router;
@@ -168,6 +172,48 @@ module.exports = router;
  *             properties:
  *               tweetText:
  *                 type: string
+ *     parameters:
+ *       - in: path
+ *         name: tweetId
+ *         schema:
+ *           type: string
+ *         description: Tweet id
+ *     responses:
+ *       "204":
+ *         description: No content
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /tweet/{tweetId}/like:
+ *   put:
+ *     summary: Like a single tweet
+ *     tags: [Tweet Bonus]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: tweetId
+ *         schema:
+ *           type: string
+ *         description: Tweet id
+ *     responses:
+ *       "204":
+ *         description: No content
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /tweet/{tweetId}/like:
+ *   delete:
+ *     summary: Unlike a single tweet
+ *     tags: [Tweet Bonus]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: tweetId
